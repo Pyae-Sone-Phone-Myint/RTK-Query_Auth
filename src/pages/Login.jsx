@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TextInput, PasswordInput } from "@mantine/core";
 import { useLoginMutation } from "../redux/api/authApi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../redux/services/authSlice";
 
@@ -41,6 +41,13 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
+
+        <div className="flex gap-2 text-sm">
+          <p>Don't have an account?</p>
+          <Link to={"/register"}>
+            <button className=" text-blue-400 underline">Register</button>
+          </Link>
+        </div>
 
         <button
           className=" py-1 px-2 bg-blue-500 rounded text-white"

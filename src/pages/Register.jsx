@@ -53,9 +53,9 @@ const Register = () => {
           placeholder="Confirmed password"
         />
         <Link to={'/login'}>
-        <div className="flex">
-          <p className=" text-sm">Already have an account?</p>
-          <button className=" text-sm underline underline-offset-2 decoration-blue-400">
+        <div className="flex text-sm">
+          <p className=" ">Already have an account?</p>
+          <button className="  text-blue-400 underline">
             Login
           </button>
         </div>

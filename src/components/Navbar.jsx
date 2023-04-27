@@ -16,7 +16,6 @@ const Navbar = () => {
       const {data} = await logout(token);
       dispatch(removeUser())
       if(data?.success) nav('/login')
-      console.log(data);
   }
   // console.log(token);
   return (
