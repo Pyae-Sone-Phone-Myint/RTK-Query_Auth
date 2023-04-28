@@ -2,63 +2,76 @@ import React, { useState } from "react";
 import { TextInput, PasswordInput } from "@mantine/core";
 import { useRegisterMutation } from "../redux/api/authApi";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "@mantine/form";
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [password_confirmation, setPassword_confirmation] = useState("");
+  // const [name, setName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [password_confirmation, setPassword_confirmation] = useState("");
   const [register] = useRegisterMutation();
   const nav = useNavigate();
 
-  const registerHandler = async (e) => {
-    try {
-      e.preventDefault();
-      const user = { name, email, password, password_confirmation };
-      const {data} = await register(user);
-      if(data.success){
-        nav('/login')
-      }
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const registerHandler = async (e) => {
+  //   try {
+  //     e.preventDefault();
+  //     const user = { name, email, password, password_confirmation };
+  //     const {data} = await register(user);
+  //     if(data.success){
+  //       nav('/login')
+  //     }
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const form = useForm({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      password_confirmation: "",
+    },
+
+    validate: {
+      name: (value) =>
+        value.length < 2 ? "Name must be at least 2 characters" : null,
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+      password: (value) =>
+        value.length < 8 ? "Password must be at least 8 characters" : null,
+    },
+  });
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">
       <h1 className=" text-2xl font-semibold">Register</h1>
       <form
-        onSubmit={registerHandler}
+        onSubmit={form.onSubmit(async (values) => {
+          try {
+            const { data } = await register(values);
+            if (data?.success) nav("/login");
+          } catch (error) {
+            console.log(error);
+          }
+        })}
         className="flex flex-col gap-5 w-96 shadow-lg p-5"
       >
-        <TextInput
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Your Name"
-        />
-        <TextInput
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Your Email"
-        />
+        <TextInput {...form.getInputProps("name")} placeholder="Your Name" />
+        <TextInput {...form.getInputProps("email")} placeholder="Your Email" />
         <PasswordInput
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          {...form.getInputProps("password")}
           placeholder="Password"
         />
         <PasswordInput
-          value={password_confirmation}
-          onChange={(e) => setPassword_confirmation(e.target.value)}
+          {...form.getInputProps("password_confirmation")}
           placeholder="Confirmed password"
         />
-        <Link to={'/login'}>
-        <div className="flex text-sm">
-          <p className=" ">Already have an account?</p>
-          <button className="  text-blue-400 underline">
-            Login
-          </button>
-        </div>
+        <Link to={"/login"}>
+          <div className="flex text-sm">
+            <p className=" ">Already have an account?</p>
+            <button className="  text-blue-400 underline">Login</button>
+          </div>
         </Link>
 
         <button

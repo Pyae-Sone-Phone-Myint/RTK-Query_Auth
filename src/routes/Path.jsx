@@ -4,6 +4,7 @@ import Dashboard from "../pages/Dashboard";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import Routeguard from "../components/Routeguard";
+import Create from "../pages/Create";
 
 const Path = () => {
   return (
@@ -19,6 +20,7 @@ const Path = () => {
         />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/create" element={<Create/>}/>
       </Routes>
     </>
   );

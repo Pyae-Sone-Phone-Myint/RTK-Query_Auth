@@ -29,9 +29,10 @@ export const authApi = createApi({
         method: "POST",
         headers: { authorization: `Bearer ${token}` },
       }),
-      invalidatesTags: ['auth']
+      invalidatesTags: ["auth"],
     }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation, useLogoutMutation } = authApi;
+export const { useRegisterMutation, useLoginMutation, useLogoutMutation } =
+  authApi;
